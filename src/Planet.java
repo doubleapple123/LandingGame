@@ -13,10 +13,14 @@ public class Planet {
     Random rand = new Random();
 
     //size of planet is based on standard deviation of max and min sizes, mass is standard deviation from size as the mean
+    //planets have a set max and min size as well as the standard deviation, size and mass will be randomly calculated from these parameters
+    //creates planet obj with these new random parameters
 
     Planet(){
         size = gaussRandom(MEAN_SIZE);
+        //System.out.println("size = " + size + "    " + (size - MEAN_SIZE));
         mass = gaussRandom(size);
+        //System.out.println("mass = " + mass + "    " + (mass - MEAN_SIZE) + "\n");
     }
 
     private int gaussRandom(int mean){
@@ -25,7 +29,7 @@ public class Planet {
         while(gauss < MIN_SIZE || gauss >MAX_SIZE){
             gauss = (STDV * rand.nextGaussian() + mean);
         }
-        System.out.println((int)gauss + "    " + ((int)gauss - MEAN_SIZE));
+
         return (int)gauss;
     }
 

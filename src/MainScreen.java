@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 public class MainScreen extends Application {
     public static void main(String[] args) {
         Planet planet = new Planet();
+
         launch(args);
     }
   
