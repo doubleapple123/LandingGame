@@ -2,3 +2,4 @@
 *.iml
 .idea/workspace.xml
 .idea/modules.xml
+*.class
