@@ -46,7 +46,7 @@ public class MainScreen extends Application {
         Rectangle floor = new Rectangle();
         floor.setWidth(FLOOR_W);
         floor.setHeight(FLOOR_RECT_H);
-        floor.setFill(Color.BLUE);
+        floor.setFill(Color.RED);
         floor.setX(0);
         floor.setY(SCREEN_HEIGHT-FLOOR_RECT_H);
 
