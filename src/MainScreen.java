@@ -6,6 +6,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class MainScreen extends Application {
+    private final int screenHeight = 900;
+    private final int screenWidth = 900;
+
     public static void main(String[] args) {
         Planet planet = new Planet();
 
@@ -15,12 +18,12 @@ public class MainScreen extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Something");
-        stage.setHeight(1080);
-        stage.setWidth(1980);
+        stage.setHeight(screenHeight);
+        stage.setWidth(screenWidth);
 
         Group root = new Group();
         Scene scene = new Scene(root);
-        Canvas canvas = new Canvas(1980,1080);
+        Canvas canvas = new Canvas(screenHeight,screenWidth);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);
