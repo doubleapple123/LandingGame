@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class MainScreen extends Application {
     private final int SCREEN_HEIGHT = 900;
     private final int SCREEN_WIDTH = 900;
+    private final int CENTER_X = SCREEN_WIDTH/2;
+    private final int CENTER_Y = SCREEN_HEIGHT/2;
 
     //rect properties
     private int startX = 200;
@@ -24,7 +26,7 @@ public class MainScreen extends Application {
     private int rect_w = 50;
     private int rect_h = 100;
 
-    private int circ_radius = 100;
+    private static int planetRadius;
 
     private boolean spacebar = false;
     private boolean left_arrow = false;
@@ -33,6 +35,10 @@ public class MainScreen extends Application {
 
     public static void main(String[] args) {
         Planet planet = new Planet();
+
+        planetRadius = planet.getSize();
+
+        Player player = new Player(planetRadius);
 
         launch(args);
     }
@@ -59,12 +65,12 @@ public class MainScreen extends Application {
 
         //circle for the planet
         Circle circ = new Circle();
-        circ.setRadius(circ_radius);
-        circ.setCenterY(SCREEN_HEIGHT/2);
-        circ.setCenterX(SCREEN_WIDTH/2);
+        circ.setRadius(planetRadius);
+        circ.setCenterY(CENTER_Y);
+        circ.setCenterX(CENTER_X);
         circ.setFill(Color.TRANSPARENT);
 
-        Image planet = new Image("PlanetImg1.png",200,200,false,false);
+        Image planet = new Image("PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
 
         //add planet and spaceship to screen
         root.getChildren().add(rect);
@@ -85,13 +91,15 @@ public class MainScreen extends Application {
             user_input_code.remove(code);
         });
 
+
+
         new AnimationTimer(){
             int Y_POS = startY;
 
             @Override
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0;
-                gc.drawImage(planet,SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-100); //draws image onto the screen
+                gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
@@ -120,5 +128,14 @@ public class MainScreen extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public int getCENTER_X(){
+        return CENTER_X;
+    }
+
+    public int getCENTER_Y(){
+        return CENTER_Y;
+    }
+
 }
 
