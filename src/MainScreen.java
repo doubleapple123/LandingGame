@@ -18,12 +18,12 @@ public class MainScreen extends Application {
     //rect properties
     private int START_X = 200;
     private int START_Y = 100;
+
     private int RECT_W = 50;
     private int RECT_H = 100;
-    private int FLOOR_RECT_H = 70;
 
+    private int FLOOR_RECT_H = 70;
     private int FLOOR_W = SCREEN_WIDTH;
-    private int FLOOR_H = FLOOR_RECT_H;
 
     public static void main(String[] args) {
         Planet planet = new Planet();
@@ -46,10 +46,10 @@ public class MainScreen extends Application {
         //proof of concept boundary detection
         Rectangle floor = new Rectangle();
         floor.setWidth(FLOOR_W);
-        floor.setHeight(FLOOR_H);
+        floor.setHeight(FLOOR_RECT_H);
         floor.setFill(Color.BLUE);
         floor.setX(0);
-        floor.setY(SCREEN_HEIGHT-FLOOR_H);
+        floor.setY(SCREEN_HEIGHT-FLOOR_RECT_H);
 
         Rectangle rect = new Rectangle();
         rect.setWidth(RECT_W);
@@ -65,17 +65,17 @@ public class MainScreen extends Application {
 
 
         new AnimationTimer(){
-            int increment = 0;
+            int Y_POS = START_Y;
+
             @Override
             public void handle(long l) {
                 double t = (l - startNanoTime) / 1000000000.0;
 
-                increment -= t;
-                increment /= 2;
-                rect.setY(START_Y-=increment);
+                Y_POS += 1;
+                rect.setY(Y_POS);
                 Shape intersect = Shape.intersect(rect,floor);
                 if(intersect.getBoundsInLocal().getWidth() != -1){
-                    root.getChildren().remove(rect);
+                    Y_POS = START_Y;
                 }
             }
         }.start();
