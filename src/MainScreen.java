@@ -38,6 +38,8 @@ public class MainScreen extends Application {
 
         planetRadius = planet.getSize();
 
+        Player player = new Player(planetRadius);
+
         launch(args);
     }
   
@@ -126,5 +128,14 @@ public class MainScreen extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public int getCENTER_X(){
+        return CENTER_X;
+    }
+
+    public int getCENTER_Y(){
+        return CENTER_Y;
+    }
+
 }
 
