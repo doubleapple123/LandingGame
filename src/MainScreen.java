@@ -60,15 +60,14 @@ public class MainScreen extends Application {
         root.getChildren().add(rect);
         root.getChildren().add(floor);
 
-        final long startNanoTime = System.nanoTime();
-
+        //final long startNanoTime = System.nanoTime();
 
         new AnimationTimer(){
             int Y_POS = START_Y;
 
             @Override
             public void handle(long l) {
-                double t = (l - startNanoTime) / 1000000000.0;
+                //double t = (l - startNanoTime) / 1000000000.0;
 
                 Y_POS += 1;
                 rect.setY(Y_POS);
