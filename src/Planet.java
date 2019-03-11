@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Planet {
 
-    private static final int MAX_SIZE = 500;
-    private static final int MIN_SIZE = 200;
+    private static final int MAX_SIZE = 300;
+    private static final int MIN_SIZE = 100;
     private static final int MEAN_SIZE = (MAX_SIZE + MIN_SIZE) / 2;
     private static final double STDV = 100;
 
