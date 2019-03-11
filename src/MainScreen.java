@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -53,6 +54,9 @@ public class MainScreen extends Application {
         circ.setRadius(CIRC_RADIUS);
         circ.setCenterY(SCREEN_HEIGHT/2);
         circ.setCenterX(SCREEN_WIDTH/2);
+        circ.setFill(Color.TRANSPARENT);
+
+        Image planet = new Image("PlanetImg1.png",200,200,false,false);
 
         root.getChildren().add(rect);
         root.getChildren().add(circ);
@@ -65,6 +69,7 @@ public class MainScreen extends Application {
             @Override
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0;
+                gc.drawImage(planet,SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2-100);
                 Y_POS += 1;
                 rect.setY(Y_POS);
                 Shape intersect = Shape.intersect(rect,circ);
