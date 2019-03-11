@@ -23,7 +23,7 @@ public class Planet {
         //System.out.println("mass = " + mass + "    " + (mass - MEAN_SIZE) + "\n");
     }
 
-    private int gaussRandom(int mean){
+    public int gaussRandom(int mean){
         double gauss = 0;
 
         while(gauss < MIN_SIZE || gauss >MAX_SIZE){
