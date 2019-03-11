@@ -71,7 +71,7 @@ public class MainScreen extends Application {
                 double t = (l - startNanoTime) / 1000000000.0;
 
                 increment -= t;
-                increment /= 10;
+                increment /= 2;
                 rect.setY(START_Y-=increment);
                 Shape intersect = Shape.intersect(rect,floor);
                 if(intersect.getBoundsInLocal().getWidth() != -1){
