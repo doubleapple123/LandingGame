@@ -31,6 +31,7 @@ public class MainScreen extends Application {
     private boolean spacebar = false;
     private boolean left_arrow = false;
     private boolean right_arrow = false;
+    private boolean other_key = false;
     private ArrayList<String> user_input_code = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -83,15 +84,40 @@ public class MainScreen extends Application {
            String code = e.getCode().toString();
            if(!user_input_code.contains(code));{
                user_input_code.add(code);
+
+                if(code.equals("SPACE")){
+                    spacebar = true;
+                }
+                else if(code.equals("RIGHT")){
+                    right_arrow = true;
+                }
+                else if(code.equals("LEFT")){
+                    left_arrow = true;
+                }
+                else{
+                    other_key = true;
+                }
             }
         });
 
         scene.setOnKeyReleased(e ->  {
             String code = e.getCode().toString();
             user_input_code.remove(code);
+
+            if(code.equals("SPACE")){
+                spacebar = false;
+            }
+            else if(code.equals("RIGHT")){
+                right_arrow = false;
+            }
+            else if(code.equals("LEFT")){
+                left_arrow = false;
+            }
+            else{
+                other_key = false;
+            }
+
         });
-
-
 
         new AnimationTimer(){
             int Y_POS = startY;
@@ -103,20 +129,6 @@ public class MainScreen extends Application {
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
-
-                //user input set-up
-                if(user_input_code.contains("SPACE")){
-                    System.out.println("SPACEBAR");
-                    spacebar = true;
-                }
-                if(user_input_code.contains("LEFT")){
-                    System.out.println("LEFT");
-                    left_arrow = true;
-                }
-                if(user_input_code.contains("RIGHT")){
-                    System.out.println("RIGHT");
-                    right_arrow = true;
-                }
 
                 Shape intersect = Shape.intersect(rect,circ);
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line
