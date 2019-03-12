@@ -29,10 +29,11 @@ public class MainScreen extends Application {
     private static int planetRadius;
     private static int planetMass;
 
-    private boolean spacebar = false;
-    private boolean left_arrow = false;
-    private boolean right_arrow = false;
-    private boolean other_key = false;
+    public boolean spacebar = false;
+    public boolean left_arrow = false;
+    public boolean right_arrow = false;
+    public boolean other_key = false;
+
     private ArrayList<String> user_input_code = new ArrayList<>();
 
     public static void main(String[] args) {
