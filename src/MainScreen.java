@@ -52,12 +52,18 @@ public class MainScreen extends Application {
     public Image getRandomPlanet(){
         Random rand = new Random();
         int pick_planet = rand.nextInt(4);
-        /*for(int x; x < pick_planet; x++){
 
-        }
-        list_of_planets.add()
-        */
-        return null;
+        Image planet1 = new Image("Assets/PlanetImg1.png");
+        Image planet2 = new Image("Assets/PlanetImg2.png");
+        Image planet3 = new Image("Assets/PlanetImg3.png");
+        Image planet4 = new Image("Assets/PlanetImg4.png");
+        list_of_planets.add(planet1);
+        list_of_planets.add(planet2);
+        list_of_planets.add(planet3);
+        list_of_planets.add(planet4);
+
+
+        return list_of_planets.get(pick_planet);
     }
 
     @Override
