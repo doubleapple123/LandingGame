@@ -27,6 +27,7 @@ public class MainScreen extends Application {
     private int rect_h = 100;
 
     private static int planetRadius;
+    private static int planetMass;
 
     private boolean spacebar = false;
     private boolean left_arrow = false;
@@ -38,12 +39,13 @@ public class MainScreen extends Application {
         Planet planet = new Planet();
 
         planetRadius = planet.getSize();
+        planetMass = planet.getMass();
 
         Player player = new Player(planetRadius);
 
         launch(args);
     }
-  
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Something");
@@ -141,13 +143,6 @@ public class MainScreen extends Application {
         stage.show();
     }
 
-    public int getCENTER_X(){
-        return CENTER_X;
-    }
-
-    public int getCENTER_Y(){
-        return CENTER_Y;
-    }
 
 }
 
