@@ -52,11 +52,12 @@ public class MainScreen extends Application {
     public Image getRandomPlanet(){
         Random rand = new Random();
         int pick_planet = rand.nextInt(4);
-        for(int x; x < pick_planet; x++){
+        /*for(int x; x < pick_planet; x++){
 
         }
         list_of_planets.add()
-
+        */
+        return null;
     }
 
     @Override
@@ -146,6 +147,7 @@ public class MainScreen extends Application {
                 rect.setY(Y_POS); //sets y-pos of rectangle
 
                 Shape intersect = Shape.intersect(rect,circ);
+
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line
                     Y_POS = startY;
                 }
