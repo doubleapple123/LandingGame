@@ -84,7 +84,6 @@ public class MainScreen extends Application {
            String code = e.getCode().toString();
            if(!user_input_code.contains(code));{
                user_input_code.add(code);
-                System.out.println(code);
 
                 if(code.equals("SPACE")){
                     spacebar = true;
@@ -128,7 +127,7 @@ public class MainScreen extends Application {
                 //double t = (l - startNanoTime) / 1000000000.0;
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
-                //Y_POS += 1; //y-position of rec moved down 1 every frame
+                Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
 
                 Shape intersect = Shape.intersect(rect,circ);
