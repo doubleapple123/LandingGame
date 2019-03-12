@@ -12,6 +12,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainScreen extends Application {
     private final int SCREEN_HEIGHT = 900;
@@ -35,6 +36,7 @@ public class MainScreen extends Application {
     public boolean other_key = false;
 
     private ArrayList<String> user_input_code = new ArrayList<>();
+    private ArrayList<Image> list_of_planets = new ArrayList<>();
 
     public static void main(String[] args) {
         Planet planet = new Planet();
@@ -45,6 +47,16 @@ public class MainScreen extends Application {
         Player player = new Player(planetRadius);
 
         launch(args);
+    }
+
+    public Image getRandomPlanet(){
+        Random rand = new Random();
+        int pick_planet = rand.nextInt(4);
+        for(int x; x < pick_planet; x++){
+
+        }
+        list_of_planets.add()
+
     }
 
     @Override
@@ -74,7 +86,7 @@ public class MainScreen extends Application {
         circ.setCenterX(CENTER_X);
         circ.setFill(Color.TRANSPARENT);
 
-        Image planet = new Image("PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet = new Image("Assets/PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
 
         //add planet and spaceship to screen
         root.getChildren().add(rect);
