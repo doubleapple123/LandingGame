@@ -120,7 +120,6 @@ public class MainScreen extends Application {
 
         });
 
-
         new AnimationTimer(){
             int Y_POS = startY;
 
