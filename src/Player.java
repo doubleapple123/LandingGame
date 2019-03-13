@@ -8,7 +8,7 @@ public class Player {
     private final int CENTER_Y = SCREEN_HEIGHT/2;
 
     private final double SPAWN_HEIGHT = 70;
-    private final double STARTING_VELOCITY = 2;
+    private final double STARTING_VELOCITY = 1.5;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
     private double rotVel; //rotational velocity
@@ -51,6 +51,8 @@ public class Player {
 
     public void setyVel(double y){ yVel = y;}
 
+    public void setRotVel(double r){rotVel = r;}
+
     //getter methods
     public double getxPos(){ return xPos;}
 
@@ -59,6 +61,8 @@ public class Player {
     public double getxVel(){ return xVel;}
 
     public double getyVel(){ return yVel;}
+
+    public double getRotVel(){return rotVel;}
 
     public double getTotalVel(){ return Math.sqrt( xVel * xVel + yVel * yVel);}
 

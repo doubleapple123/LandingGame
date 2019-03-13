@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -20,9 +21,8 @@ public class MainScreen extends Application {
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
     private final double GRAVITY_CONST = 5;
-
-    private int rect_w = 5;
-    private int rect_h = 5;
+    private final int SHIP_HEIGHT = 70;
+    private final int SHIP_WIDTH = 30;
 
     //planet properties
     private static int planetRadius;
@@ -39,18 +39,13 @@ public class MainScreen extends Application {
     private double respectiveX; //x and y respective to the center of planet
     private double respectiveY;
 
-
     public boolean spacebar = false;
     public boolean left_arrow = false;
     public boolean right_arrow = false;
     public boolean other_key = false;
 
-
     private ArrayList<String> user_input_code = new ArrayList<>();
     private ArrayList<Image> list_of_planets = new ArrayList<>();
-
-    public ArrayList<String> user_input_code = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Planet planet = new Planet();
@@ -76,6 +71,19 @@ public class MainScreen extends Application {
         return list_of_planets.get(pick_planet);
     }
 
+    private void rotate(GraphicsContext gc, double angle, double px, double py){ //FUNCTION CREDITED TO (jewelsea) on stackoverflow
+        // Variable px and py are the pivot points
+        Rotate r = new Rotate(angle,px,py);
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+    }
+
+    private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) { //FUNCTION CREDITED TO (jewelsea) on stackoverflow
+        gc.save(); // saves the current state on stack, including the current transform
+        rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
+        gc.drawImage(image, tlpx, tlpy);
+        gc.restore(); // back to original state (before rotation)
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Something");
@@ -84,15 +92,19 @@ public class MainScreen extends Application {
 
         Group root = new Group();
         Scene scene = new Scene(root);
-        Canvas canvas = new Canvas(SCREEN_HEIGHT,SCREEN_WIDTH);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
+        Canvas canvasPLANET = new Canvas(SCREEN_HEIGHT,SCREEN_WIDTH);
+        Canvas canvasSHIP = new Canvas(SCREEN_HEIGHT,SCREEN_WIDTH);
+
+        GraphicsContext gcPLANET = canvasPLANET.getGraphicsContext2D();
+        GraphicsContext gcSHIP = canvasSHIP.getGraphicsContext2D();
+        root.getChildren().add(canvasPLANET);
+        root.getChildren().add(canvasSHIP);
 
         //rectangle for spaceship
         Rectangle rect = new Rectangle();
-        rect.setWidth(rect_w);
-        rect.setHeight(rect_h);
-        rect.setFill(Color.BLACK);
+        rect.setWidth(SHIP_WIDTH);
+        rect.setHeight(SHIP_HEIGHT);
+        rect.setFill(Color.TRANSPARENT);
 
         //circle for the planet
         Circle circ = new Circle();
@@ -147,16 +159,34 @@ public class MainScreen extends Application {
 
         //final long startNanoTime = System.nanoTime(); // gets current system time
         Image planet = getRandomPlanet();
+        Image spaceShip = new Image("Assets/RocketShip.png",SHIP_WIDTH,SHIP_HEIGHT,false,false);
 
         new AnimationTimer(){
             
             Player player = new Player(planetRadius);
+            double rotateAmount = 0; // variable saves how much rotation
 
             @Override
             public void handle(long l) {
+                gcSHIP.clearRect(0,0,SCREEN_HEIGHT,SCREEN_WIDTH); //clears screen every frame
                 //double t = (l - startNanoTime) / 1000000000.0; // t is a time counter. increments by 1 every second
 
-                gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
+                gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
+
+                if(left_arrow){
+                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateAmount -= 0.8; //sets the rotation amount in degrees, left_arrow = negative
+                }
+                else{
+                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                }
+                if(right_arrow){
+                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateAmount += 0.8; //set the amount of rotation in degrees, right_arrow = positive
+                }
+                else{
+                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                }
 
                 //physics
 
@@ -167,7 +197,6 @@ public class MainScreen extends Application {
                 respectiveY = CENTER_Y - player.getyPos();
 
                 angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
-
 
                 //acceleration update
                 xAccel = -totalAccel * Math.cos(Math.toRadians(angle));
@@ -202,7 +231,5 @@ public class MainScreen extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-
 }
 
