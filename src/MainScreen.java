@@ -18,7 +18,7 @@ public class MainScreen extends Application {
     private final int SCREEN_WIDTH = 900;
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
-    private final int GRAVITY = 10;
+    private final double GRAVITY_CONST = 0.1;
 
     //rect properties
     private int startX = 350;
@@ -27,13 +27,16 @@ public class MainScreen extends Application {
     private int rect_w = 50;
     private int rect_h = 100;
 
+    //planet properties
     private static int planetRadius;
     private static int planetMass;
-    private double force;
 
-    private static double playerXPos;
-    private static double playerYPos;
-    private static double playerDist; //player's distance from center of world
+    //player properties
+    private double totalDist;
+    private double totalAccel; //the total acceleration of the player towards the planet
+    private double angle; //angle of spaceship on unit circle
+    private double respectiveX; //x and y respective to the center of planet
+    private double respectiveY;
 
     public boolean spacebar = false;
     public boolean left_arrow = false;
@@ -45,9 +48,6 @@ public class MainScreen extends Application {
         Planet planet = new Planet();
         planetRadius = planet.getSize();
         planetMass = planet.getMass();
-        Player player = new Player(planetRadius);
-        playerXPos = player.getxPos();
-        playerYPos = player.getyPos();
 
         launch(args);
     }
@@ -129,18 +129,28 @@ public class MainScreen extends Application {
 
         new AnimationTimer(){
             int Y_POS = startY;
+            Player player = new Player(planetRadius);
 
             @Override
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0;
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
-                force = GRAVITY * planetMass / Math.pow(Math.sqrt(Math.pow(CENTER_X - playerXPos, 2) + Math.pow(CENTER_Y - playerYPos, 2)), 2);
+                //physics
+                totalDist = Math.sqrt(Math.pow(CENTER_X - player.getxPos(), 2) + Math.pow(CENTER_Y - player.getyPos(), 2));
+                totalAccel = GRAVITY_CONST * planetMass / Math.pow(totalDist, 2);
+                respectiveX = player.getxPos() - CENTER_X;
+                respectiveY = CENTER_Y - player.getyPos();
+                angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
+                System.out.println(angle);
+
 
                 //calculations and drawing above this line, position changes and checks below this line
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
+
+                //checks below this line
 
                 Shape intersect = Shape.intersect(rect,circ);
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line

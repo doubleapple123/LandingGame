@@ -10,7 +10,7 @@ public class Player {
     private final int SPAWN_HIEGHT = 100;
     private final int VELOCITY = 100;
 
-    private double dir; //direction facing, measured in degrees (0 - 359, 0 being right, 90 up, 180 left, 270 down)
+    private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
     private double dirVel;
     private double xPos;
     private double yPos;
