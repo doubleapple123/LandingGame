@@ -20,10 +20,6 @@ public class MainScreen extends Application {
     private final int CENTER_Y = SCREEN_HEIGHT/2;
     private final double GRAVITY_CONST = 5;
 
-    //rect properties
-    private int startX = 350;
-    private int startY = 100;
-
     private int rect_w = 5;
     private int rect_h = 5;
 
@@ -73,8 +69,6 @@ public class MainScreen extends Application {
         rect.setWidth(rect_w);
         rect.setHeight(rect_h);
         rect.setFill(Color.BLACK);
-        rect.setX(startX);
-        rect.setY(startY);
 
         //circle for the planet
         Circle circ = new Circle();
@@ -132,7 +126,7 @@ public class MainScreen extends Application {
         });
 
         new AnimationTimer(){
-            int Y_POS = startY;
+            
             Player player = new Player(planetRadius);
 
             @Override
@@ -176,7 +170,6 @@ public class MainScreen extends Application {
 
                 Shape intersect = Shape.intersect(rect,circ);
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line
-                    Y_POS = startY;
                 }
             }
         }.start();
