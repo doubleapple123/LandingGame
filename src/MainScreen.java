@@ -87,7 +87,7 @@ public class MainScreen extends Application {
     }
 
     public void rotateRect(Rectangle rect, double angle, double px, double py) {
-        Rotate r = new Rotate(angle, px, py);
+        Rotate r = new Rotate(angle, px+SHIP_WIDTH/2, py-SHIP_HEIGHT/2);
         rect.getTransforms().add(r);
         rect.setX(player.getxPos()); //sets y-pos of rectangle
         rect.setY(player.getyPos());
