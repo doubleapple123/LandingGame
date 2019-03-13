@@ -49,8 +49,6 @@ public class MainScreen extends Application {
     private ArrayList<String> user_input_code = new ArrayList<>();
     private ArrayList<Image> list_of_planets = new ArrayList<>();
 
-    public ArrayList<String> user_input_code = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Planet planet = new Planet();
