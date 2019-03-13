@@ -53,16 +53,16 @@ public class MainScreen extends Application {
         Random rand = new Random();
         int pick_planet = rand.nextInt(4);
 
-        Image planet1 = new Image("Assets/PlanetImg1.png",planetRadius/2,planetRadius/2,false,false);
-        Image planet2 = new Image("Assets/PlanetImg2.png",planetRadius/2,planetRadius/2,false,false);
-        Image planet3 = new Image("Assets/PlanetImg3.png",planetRadius/2,planetRadius/2,false,false);
-        Image planet4 = new Image("Assets/PlanetImg4.png",planetRadius/2,planetRadius/2,false,false);
+        Image planet1 = new Image("Assets/PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet2 = new Image("Assets/PlanetImg2.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet3 = new Image("Assets/PlanetImg3.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet4 = new Image("Assets/PlanetImg4.png",planetRadius*2,planetRadius*2,false,false);
         list_of_planets.add(planet1);
         list_of_planets.add(planet2);
         list_of_planets.add(planet3);
         list_of_planets.add(planet4);
 
-        return list_of_planets.get(1);
+        return list_of_planets.get(pick_planet);
     }
 
     @Override
@@ -95,7 +95,6 @@ public class MainScreen extends Application {
         //add planet and spaceship to screen
         root.getChildren().add(rect);
         root.getChildren().add(circ);
-
 
         //user Inputs
         scene.setOnKeyPressed(e -> {
@@ -138,6 +137,7 @@ public class MainScreen extends Application {
         });
 
         //final long startNanoTime = System.nanoTime(); // gets current system time
+        Image planet = getRandomPlanet();
 
         new AnimationTimer(){
             int Y_POS = startY;
@@ -146,7 +146,7 @@ public class MainScreen extends Application {
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0; // t is a time counter. increments by 1 every second
 
-                gc.drawImage(getRandomPlanet(),CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
+                gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
