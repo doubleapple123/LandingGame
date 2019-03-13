@@ -53,6 +53,10 @@ public class Player {
 
     public void setyVel(double y){ yVel = y;}
 
+    public void setDir(double a){ dir = a;}
+
+    public void setRotVel(double w){ rotVel = w;}
+
     //getter methods
     public double getxPos(){ return xPos;}
 
@@ -65,5 +69,11 @@ public class Player {
     public double getTotalVel(){ return Math.sqrt( xVel * xVel + yVel * yVel);}
 
     public double getDir(){ return dir;}
+
+    public double getRotVel(){ return rotVel;}
+
+    public double getRotAccel(){ return ROTATION_ACCEL;}
+
+    public double getThrust(){ return THRUST;}
 
 }

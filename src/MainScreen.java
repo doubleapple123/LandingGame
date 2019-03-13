@@ -181,8 +181,6 @@ public class MainScreen extends Application {
                 player.setxPos(player.getxPos() + player.getxVel());
                 player.setyPos(player.getyPos() + player.getyVel());
 
-                System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
-
                 //Y_POS += 1; //y-position of rec moved down 1 every frame
 
                 rect.setX(player.getxPos()); //sets y-pos of rectangle
