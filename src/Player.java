@@ -7,7 +7,7 @@ public class Player {
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
 
-    private final double SPAWN_HEIGHT = 70;
+    private final double SPAWN_HEIGHT = 100;
     private final double STARTING_VELOCITY = 1.5;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
