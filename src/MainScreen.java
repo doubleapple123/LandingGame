@@ -12,6 +12,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainScreen extends Application {
     private final int SCREEN_HEIGHT = 900;
@@ -38,11 +39,18 @@ public class MainScreen extends Application {
     private double respectiveX; //x and y respective to the center of planet
     private double respectiveY;
 
+
     public boolean spacebar = false;
     public boolean left_arrow = false;
     public boolean right_arrow = false;
     public boolean other_key = false;
+
+
+    private ArrayList<String> user_input_code = new ArrayList<>();
+    private ArrayList<Image> list_of_planets = new ArrayList<>();
+
     public ArrayList<String> user_input_code = new ArrayList<>();
+
 
     public static void main(String[] args) {
         Planet planet = new Planet();
@@ -50,6 +58,22 @@ public class MainScreen extends Application {
         planetMass = planet.getMass();
 
         launch(args);
+    }
+
+    public Image getRandomPlanet(){
+        Random rand = new Random();
+        int pick_planet = rand.nextInt(4);
+
+        Image planet1 = new Image("Assets/PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet2 = new Image("Assets/PlanetImg2.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet3 = new Image("Assets/PlanetImg3.png",planetRadius*2,planetRadius*2,false,false);
+        Image planet4 = new Image("Assets/PlanetImg4.png",planetRadius*2,planetRadius*2,false,false);
+        list_of_planets.add(planet1);
+        list_of_planets.add(planet2);
+        list_of_planets.add(planet3);
+        list_of_planets.add(planet4);
+
+        return list_of_planets.get(pick_planet);
     }
 
     @Override
@@ -77,13 +101,9 @@ public class MainScreen extends Application {
         circ.setCenterX(CENTER_X);
         circ.setFill(Color.TRANSPARENT);
 
-        Image planet = new Image("PlanetImg1.png",planetRadius*2,planetRadius*2,false,false);
-
         //add planet and spaceship to screen
         root.getChildren().add(rect);
         root.getChildren().add(circ);
-
-        //final long startNanoTime = System.nanoTime();
 
         //user Inputs
         scene.setOnKeyPressed(e -> {
@@ -125,13 +145,17 @@ public class MainScreen extends Application {
 
         });
 
+        //final long startNanoTime = System.nanoTime(); // gets current system time
+        Image planet = getRandomPlanet();
+
         new AnimationTimer(){
             
             Player player = new Player(planetRadius);
 
             @Override
             public void handle(long l) {
-                //double t = (l - startNanoTime) / 1000000000.0;
+                //double t = (l - startNanoTime) / 1000000000.0; // t is a time counter. increments by 1 every second
+
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 //physics
@@ -169,6 +193,7 @@ public class MainScreen extends Application {
                 //checks below this line
 
                 Shape intersect = Shape.intersect(rect,circ);
+
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line
                 }
             }
