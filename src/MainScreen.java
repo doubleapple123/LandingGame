@@ -31,10 +31,14 @@ public class MainScreen extends Application {
     private static int planetRadius;
     private static int planetMass;
 
+    //accelerations on player
+    private double totalAccel; //the total acceleration of the player towards the planet
+    private double xAccel;
+    private double yAccel;
+
     //player properties
     private double totalDist;
-    private double totalAccel; //the total acceleration of the player towards the planet
-    private double angle; //angle of spaceship on unit circle
+    private double angle; //angle of spaceship on unit the circle in degrees
     private double respectiveX; //x and y respective to the center of planet
     private double respectiveY;
 
@@ -137,15 +141,30 @@ public class MainScreen extends Application {
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 //physics
+
+                //distance and force
                 totalDist = Math.sqrt(Math.pow(CENTER_X - player.getxPos(), 2) + Math.pow(CENTER_Y - player.getyPos(), 2));
                 totalAccel = GRAVITY_CONST * planetMass / Math.pow(totalDist, 2);
                 respectiveX = player.getxPos() - CENTER_X;
                 respectiveY = CENTER_Y - player.getyPos();
+
                 angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
-                System.out.println(angle);
+
+                //acceleration update
+                xAccel = totalAccel * Math.cos(Math.toRadians(angle));
+                yAccel = totalAccel * Math.sin(Math.toRadians(angle));
+
+                //velocity update
+                player.setxVel(player.getxVel() + xAccel);
+                player.setyVel(player.getyVel() + yAccel);
+
+                //calculations and drawings above this line, position changes and checks below this line
+
+                //position update
+                player.setxPos(player.getxPos() + player.getxVel());
+                player.setyPos(player.getyPos() + player.getyVel());
 
 
-                //calculations and drawing above this line, position changes and checks below this line
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle
