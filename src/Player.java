@@ -9,9 +9,11 @@ public class Player {
 
     private final double SPAWN_HEIGHT = 70;
     private final double STARTING_VELOCITY = 2;
+    private final double ROTATION_ACCEL = 1;
+    private final double THRUST = 2;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
-    private double rotVel; //rotational velocity
+    private double rotVel; //rotational velocity (Degrees per frame)
     private double xPos;
     private double yPos;
     private double xVel;
