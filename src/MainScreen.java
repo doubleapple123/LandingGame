@@ -43,11 +43,12 @@ public class MainScreen extends Application {
     public boolean left_arrow = false;
     public boolean right_arrow = false;
     public boolean other_key = false;
+    public Rotate rotR = new Rotate();
 
     private ArrayList<String> user_input_code = new ArrayList<>();
     private ArrayList<Image> list_of_planets = new ArrayList<>();
 
-    Player player = new Player(planetRadius);
+    public Player player = new Player(planetRadius);
 
     public static void main(String[] args) {
         Planet planet = new Planet();
@@ -83,14 +84,7 @@ public class MainScreen extends Application {
         gc.save(); // saves the current state on stack, including the current transform
         rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
         gc.drawImage(image, tlpx, tlpy);
-        gc.restore(); // back to original state (before rotation)
-    }
-
-    public void rotateRect(Rectangle rect, double angle, double px, double py) {
-        Rotate r = new Rotate(angle, px+SHIP_WIDTH/2, py-SHIP_HEIGHT/2);
-        rect.getTransforms().add(r);
-        rect.setX(player.getxPos()); //sets y-pos of rectangle
-        rect.setY(player.getyPos());
+        //gc.restore(); // back to original state (before rotation)
     }
 
     @Override
@@ -174,38 +168,32 @@ public class MainScreen extends Application {
             
 
             double rotateAmount = 0; // variable saves how much rotation
-            double rectRotate = 0;
 
             @Override
             public void handle(long l) {
-                gcSHIP.clearRect(0,0,SCREEN_HEIGHT,SCREEN_WIDTH); //clears screen every frame
+                gcSHIP.clearRect(0,0,SCREEN_HEIGHT+200,SCREEN_WIDTH+200); //clears screen every frame
                 //double t = (l - startNanoTime) / 1000000000.0; // t is a time counter. increments by 1 every second
 
                 gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 if(left_arrow){
-
-                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
-                    rectRotate = -0.8;
-                    rotateAmount -= 0.8; //sets the rotation amount in degrees, left_arrow = negative
+                    rotR.setAngle(1);
+                    rotateAmount -= 0.8;
                 }
-                else{
 
-                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
-                    rectRotate = 0;
-                }
                 if(right_arrow){
-
-                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
-                    rotateAmount += 0.8; //set the amount of rotation in degrees, right_arrow = positive
-                    rectRotate = 0.8;
-                }
-                else{
-
-                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
-                    rectRotate = 0;
+                    rotR.setAngle(-1);
+                    rotateAmount += 0.8;
                 }
                 drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+
+                rotR.setPivotX(player.getxPos()+SHIP_WIDTH/2);
+                rotR.setPivotY(player.getyPos()+SHIP_HEIGHT/2);
+
+                rect.setX(player.getxPos()); //sets y-pos of rectangle
+                rect.setY(player.getyPos());
+
+                rect.getTransforms().add(rotR);
 
                 //physics
 
@@ -232,11 +220,6 @@ public class MainScreen extends Application {
                 player.setyPos(player.getyPos() + player.getyVel());
 
                 System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
-
-                //Y_POS += 1; //y-position of rec moved down 1 every frame
-
-                //rect.setX(player.getxPos()); //sets y-pos of rectangle
-                //rect.setY(player.getyPos());
 
                 //checks below this line
 
