@@ -47,6 +47,8 @@ public class MainScreen extends Application {
     private ArrayList<String> user_input_code = new ArrayList<>();
     private ArrayList<Image> list_of_planets = new ArrayList<>();
 
+    Player player = new Player(planetRadius);
+
     public static void main(String[] args) {
         Planet planet = new Planet();
         planetRadius = planet.getSize();
@@ -71,17 +73,24 @@ public class MainScreen extends Application {
         return list_of_planets.get(pick_planet);
     }
 
-    private void rotate(GraphicsContext gc, double angle, double px, double py){ //FUNCTION CREDITED TO (jewelsea) on stackoverflow
+    public void rotate(GraphicsContext gc, double angle, double px, double py){ //FUNCTION CREDITED TO (jewelsea) on stackoverflow
         // Variable px and py are the pivot points
         Rotate r = new Rotate(angle,px,py);
         gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
     }
 
-    private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) { //FUNCTION CREDITED TO (jewelsea) on stackoverflow
+    public void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) { //FUNCTION CREDITED TO (jewelsea) on stackoverflow
         gc.save(); // saves the current state on stack, including the current transform
         rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
         gc.drawImage(image, tlpx, tlpy);
         gc.restore(); // back to original state (before rotation)
+    }
+
+    public void rotateRect(Rectangle rect, double angle, double px, double py) {
+        Rotate r = new Rotate(angle, px, py);
+        rect.getTransforms().add(r);
+        rect.setX(player.getxPos()); //sets y-pos of rectangle
+        rect.setY(player.getyPos());
     }
 
     @Override
@@ -104,7 +113,7 @@ public class MainScreen extends Application {
         Rectangle rect = new Rectangle();
         rect.setWidth(SHIP_WIDTH);
         rect.setHeight(SHIP_HEIGHT);
-        rect.setFill(Color.TRANSPARENT);
+        rect.setFill(Color.BLACK);
 
         //circle for the planet
         Circle circ = new Circle();
@@ -163,8 +172,9 @@ public class MainScreen extends Application {
 
         new AnimationTimer(){
             
-            Player player = new Player(planetRadius);
+
             double rotateAmount = 0; // variable saves how much rotation
+            double rectRotate = 0;
 
             @Override
             public void handle(long l) {
@@ -175,17 +185,25 @@ public class MainScreen extends Application {
 
                 if(left_arrow){
                     drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
+                    rectRotate = -0.8;
                     rotateAmount -= 0.8; //sets the rotation amount in degrees, left_arrow = negative
                 }
                 else{
                     drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
+                    rectRotate = 0;
                 }
                 if(right_arrow){
                     drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
                     rotateAmount += 0.8; //set the amount of rotation in degrees, right_arrow = positive
+                    rectRotate = 0.8;
                 }
                 else{
                     drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                    rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
+                    rectRotate = 0;
                 }
 
                 //physics
@@ -216,8 +234,8 @@ public class MainScreen extends Application {
 
                 //Y_POS += 1; //y-position of rec moved down 1 every frame
 
-                rect.setX(player.getxPos()); //sets y-pos of rectangle
-                rect.setY(player.getyPos());
+                //rect.setX(player.getxPos()); //sets y-pos of rectangle
+                //rect.setY(player.getyPos());
 
                 //checks below this line
 
