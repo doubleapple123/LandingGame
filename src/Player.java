@@ -7,11 +7,11 @@ public class Player {
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
 
-    private final int SPAWN_HIEGHT = 100;
-    private final int VELOCITY = 100;
+    private final double SPAWN_HEIGHT = 70;
+    private final double STARTING_VELOCITY = 2;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
-    private double dirVel;
+    private double rotVel; //rotational velocity
     private double xPos;
     private double yPos;
     private double xVel;
@@ -24,21 +24,21 @@ public class Player {
     Player(int planetRadius){ //input planet radius to determine how high to spawn
 
         dir = 0; //can be randomized later
-        dirVel = 0;
+        rotVel = 0;
 
         double degree = rand.nextFloat() * 360;
         double radian = Math.toRadians(degree);
 
-        xPos = CENTER_X + ((SPAWN_HIEGHT + planetRadius) * Math.cos(radian));
-        yPos = CENTER_Y + ((SPAWN_HIEGHT + planetRadius) * Math.sin(radian));
+        xPos = CENTER_X + ((SPAWN_HEIGHT + planetRadius) * Math.cos(radian));
+        yPos = CENTER_Y + ((SPAWN_HEIGHT + planetRadius) * Math.sin(radian));
 
         //if statement flips coin to determine whether ship starts clockwise or counter clockwise
         if(rand.nextInt(2) == 0){
-            xVel = VELOCITY * -Math.sin(radian);
-            yVel = VELOCITY * Math.cos(radian);
+            xVel = STARTING_VELOCITY * -Math.sin(radian);
+            yVel = STARTING_VELOCITY * Math.cos(radian);
         } else{
-            xVel = -VELOCITY * -Math.sin(radian);
-            yVel = -VELOCITY * Math.cos(radian);
+            xVel = -STARTING_VELOCITY * -Math.sin(radian);
+            yVel = -STARTING_VELOCITY * Math.cos(radian);
         }
     }
 

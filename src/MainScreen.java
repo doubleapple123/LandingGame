@@ -18,14 +18,14 @@ public class MainScreen extends Application {
     private final int SCREEN_WIDTH = 900;
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
-    private final double GRAVITY_CONST = 0.1;
+    private final double GRAVITY_CONST = 5;
 
     //rect properties
     private int startX = 350;
     private int startY = 100;
 
-    private int rect_w = 50;
-    private int rect_h = 100;
+    private int rect_w = 5;
+    private int rect_h = 5;
 
     //planet properties
     private static int planetRadius;
@@ -150,8 +150,9 @@ public class MainScreen extends Application {
 
                 angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
 
+
                 //acceleration update
-                xAccel = totalAccel * Math.cos(Math.toRadians(angle));
+                xAccel = -totalAccel * Math.cos(Math.toRadians(angle));
                 yAccel = totalAccel * Math.sin(Math.toRadians(angle));
 
                 //velocity update
@@ -164,10 +165,12 @@ public class MainScreen extends Application {
                 player.setxPos(player.getxPos() + player.getxVel());
                 player.setyPos(player.getyPos() + player.getyVel());
 
+                System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
 
+                //Y_POS += 1; //y-position of rec moved down 1 every frame
 
-                Y_POS += 1; //y-position of rec moved down 1 every frame
-                rect.setY(Y_POS); //sets y-pos of rectangle
+                rect.setX(player.getxPos()); //sets y-pos of rectangle
+                rect.setY(player.getyPos());
 
                 //checks below this line
 
