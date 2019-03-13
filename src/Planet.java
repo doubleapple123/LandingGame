@@ -18,9 +18,7 @@ public class Planet {
 
     Planet(){
         size = gaussRandom(MEAN_SIZE);
-        //System.out.println("size = " + size + "    " + (size - MEAN_SIZE));
         mass = gaussRandom(size);
-        //System.out.println("mass = " + mass + "    " + (mass - MEAN_SIZE) + "\n");
     }
 
     public int gaussRandom(int mean){

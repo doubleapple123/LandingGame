@@ -18,9 +18,10 @@ public class MainScreen extends Application {
     private final int SCREEN_WIDTH = 900;
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
+    private final int GRAVITY = 10;
 
     //rect properties
-    private int startX = 200;
+    private int startX = 350;
     private int startY = 100;
 
     private int rect_w = 50;
@@ -28,20 +29,25 @@ public class MainScreen extends Application {
 
     private static int planetRadius;
     private static int planetMass;
+    private double force;
 
-    private boolean spacebar = false;
-    private boolean left_arrow = false;
-    private boolean right_arrow = false;
-    private boolean other_key = false;
-    private ArrayList<String> user_input_code = new ArrayList<>();
+    private static double playerXPos;
+    private static double playerYPos;
+    private static double playerDist; //player's distance from center of world
+
+    public boolean spacebar = false;
+    public boolean left_arrow = false;
+    public boolean right_arrow = false;
+    public boolean other_key = false;
+    public ArrayList<String> user_input_code = new ArrayList<>();
 
     public static void main(String[] args) {
         Planet planet = new Planet();
-
         planetRadius = planet.getSize();
         planetMass = planet.getMass();
-
         Player player = new Player(planetRadius);
+        playerXPos = player.getxPos();
+        playerYPos = player.getyPos();
 
         launch(args);
     }
@@ -63,7 +69,7 @@ public class MainScreen extends Application {
         rect.setWidth(rect_w);
         rect.setHeight(rect_h);
         rect.setFill(Color.BLACK);
-        rect.setX(startX +105);
+        rect.setX(startX);
         rect.setY(startY);
 
         //circle for the planet
@@ -128,6 +134,10 @@ public class MainScreen extends Application {
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0;
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
+
+                force = GRAVITY * planetMass / Math.pow(Math.sqrt(Math.pow(CENTER_X - playerXPos, 2) + Math.pow(CENTER_Y - playerYPos, 2)), 2);
+
+                //calculations and drawing above this line, position changes and checks below this line
 
                 Y_POS += 1; //y-position of rec moved down 1 every frame
                 rect.setY(Y_POS); //sets y-pos of rectangle

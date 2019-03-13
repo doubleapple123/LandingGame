@@ -11,6 +11,7 @@ public class Player {
     private final int VELOCITY = 100;
 
     private double dir; //direction facing, measured in degrees (0 - 359, 0 being right, 90 up, 180 left, 270 down)
+    private double dirVel;
     private double xPos;
     private double yPos;
     private double xVel;
@@ -22,7 +23,8 @@ public class Player {
 
     Player(int planetRadius){ //input planet radius to determine how high to spawn
 
-        dir = 0;
+        dir = 0; //can be randomized later
+        dirVel = 0;
 
         double degree = rand.nextFloat() * 360;
         double radian = Math.toRadians(degree);
