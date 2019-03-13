@@ -18,30 +18,36 @@ public class MainScreen extends Application {
     private final int SCREEN_WIDTH = 900;
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
+    private final double GRAVITY_CONST = 5;
 
-    //rect properties
-    private int startX = 200;
-    private int startY = 100;
+    private int rect_w = 5;
+    private int rect_h = 5;
 
-    private int rect_w = 50;
-    private int rect_h = 100;
-
+    //planet properties
     private static int planetRadius;
     private static int planetMass;
 
-    private boolean spacebar = false;
-    private boolean left_arrow = false;
-    private boolean right_arrow = false;
-    private boolean other_key = false;
-    private ArrayList<String> user_input_code = new ArrayList<>();
+    //accelerations on player
+    private double totalAccel; //the total acceleration of the player towards the planet
+    private double xAccel;
+    private double yAccel;
+
+    //player properties
+    private double totalDist;
+    private double angle; //angle of spaceship on unit the circle in degrees
+    private double respectiveX; //x and y respective to the center of planet
+    private double respectiveY;
+
+    public boolean spacebar = false;
+    public boolean left_arrow = false;
+    public boolean right_arrow = false;
+    public boolean other_key = false;
+    public ArrayList<String> user_input_code = new ArrayList<>();
 
     public static void main(String[] args) {
         Planet planet = new Planet();
-
         planetRadius = planet.getSize();
         planetMass = planet.getMass();
-
-        Player player = new Player(planetRadius);
 
         launch(args);
     }
@@ -63,8 +69,6 @@ public class MainScreen extends Application {
         rect.setWidth(rect_w);
         rect.setHeight(rect_h);
         rect.setFill(Color.BLACK);
-        rect.setX(startX +105);
-        rect.setY(startY);
 
         //circle for the planet
         Circle circ = new Circle();
@@ -122,19 +126,50 @@ public class MainScreen extends Application {
         });
 
         new AnimationTimer(){
-            int Y_POS = startY;
+            
+            Player player = new Player(planetRadius);
 
             @Override
             public void handle(long l) {
                 //double t = (l - startNanoTime) / 1000000000.0;
                 gc.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
-                Y_POS += 1; //y-position of rec moved down 1 every frame
-                rect.setY(Y_POS); //sets y-pos of rectangle
+                //physics
+
+                //distance and force
+                totalDist = Math.sqrt(Math.pow(CENTER_X - player.getxPos(), 2) + Math.pow(CENTER_Y - player.getyPos(), 2));
+                totalAccel = GRAVITY_CONST * planetMass / Math.pow(totalDist, 2);
+                respectiveX = player.getxPos() - CENTER_X;
+                respectiveY = CENTER_Y - player.getyPos();
+
+                angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
+
+
+                //acceleration update
+                xAccel = -totalAccel * Math.cos(Math.toRadians(angle));
+                yAccel = totalAccel * Math.sin(Math.toRadians(angle));
+
+                //velocity update
+                player.setxVel(player.getxVel() + xAccel);
+                player.setyVel(player.getyVel() + yAccel);
+
+                //calculations and drawings above this line, position changes and checks below this line
+
+                //position update
+                player.setxPos(player.getxPos() + player.getxVel());
+                player.setyPos(player.getyPos() + player.getyVel());
+
+                System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
+
+                //Y_POS += 1; //y-position of rec moved down 1 every frame
+
+                rect.setX(player.getxPos()); //sets y-pos of rectangle
+                rect.setY(player.getyPos());
+
+                //checks below this line
 
                 Shape intersect = Shape.intersect(rect,circ);
                 if(intersect.getBoundsInLocal().getWidth() != -1){ //checks for intersection between object (rect) and (circ) on previous line
-                    Y_POS = startY;
                 }
             }
         }.start();
