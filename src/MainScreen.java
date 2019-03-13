@@ -184,27 +184,28 @@ public class MainScreen extends Application {
                 gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 if(left_arrow){
-                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+
                     rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
                     rectRotate = -0.8;
                     rotateAmount -= 0.8; //sets the rotation amount in degrees, left_arrow = negative
                 }
                 else{
-                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+
                     rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
                     rectRotate = 0;
                 }
                 if(right_arrow){
-                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+
                     rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
                     rotateAmount += 0.8; //set the amount of rotation in degrees, right_arrow = positive
                     rectRotate = 0.8;
                 }
                 else{
-                    drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+
                     rotateRect(rect,rectRotate,player.getxPos(),player.getyPos());
                     rectRotate = 0;
                 }
+                drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
 
                 //physics
 
