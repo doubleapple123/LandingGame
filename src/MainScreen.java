@@ -62,7 +62,7 @@ public class MainScreen extends Application {
         list_of_planets.add(planet3);
         list_of_planets.add(planet4);
 
-        return list_of_planets.get(pick_planet);
+        return list_of_planets.get(1);
     }
 
     @Override
