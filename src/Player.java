@@ -9,6 +9,8 @@ public class Player {
 
     private final double SPAWN_HEIGHT = 70;
     private final double STARTING_VELOCITY = 1.5;
+    private final double ROT_ACCEL = .05;
+    private final double MAX_SPIN = 1.5;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
     private double rotVel; //rotational velocity
@@ -53,7 +55,13 @@ public class Player {
 
     public void setRotVel(double r){rotVel = r;}
 
+    public void setDir(double a){dir = a;}
+
     //getter methods
+    public double getRotAccel(){return ROT_ACCEL;}
+
+    public double getMaxSpin(){return MAX_SPIN;}
+
     public double getxPos(){ return xPos;}
 
     public double getyPos(){ return yPos;}
@@ -63,8 +71,6 @@ public class Player {
     public double getyVel(){ return yVel;}
 
     public double getRotVel(){return rotVel;}
-
-    public double getTotalVel(){ return Math.sqrt( xVel * xVel + yVel * yVel);}
 
     public double getDir(){ return dir;}
 

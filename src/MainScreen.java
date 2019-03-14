@@ -107,7 +107,8 @@ public class MainScreen extends Application {
         Rectangle rect = new Rectangle();
         rect.setWidth(SHIP_WIDTH);
         rect.setHeight(SHIP_HEIGHT);
-        rect.setFill(Color.BLACK);
+        rect.setFill(Color.TRANSPARENT);
+        //rect.setFill(Color.BLACK);
 
         //circle for the planet
         Circle circ = new Circle();
@@ -178,21 +179,23 @@ public class MainScreen extends Application {
 
                 if(left_arrow){
                     rotR.setAngle(0.8);
-                    rotateAmount -= 0.8;
+                    if(player.getRotVel() > -player.getMaxSpin()) //limits how fast you can spin
+                        player.setRotVel(player.getRotVel() - player.getRotAccel());
                 }
-                else{
-                    rotR.setAngle(0);
-                }
-
-                if(right_arrow){
+                else if(right_arrow){
                     rotR.setAngle(-0.8);
-                    rotateAmount += 0.8;
+                    if(player.getRotVel() < player.getMaxSpin()) //limits how fast you can spin
+                        player.setRotVel(player.getRotVel() + player.getRotAccel());
                 }
                 else{
-                    rotR.setAngle(0);
+                   if(Math.abs(player.getRotVel()) < .5)
+                       player.setRotVel(player.getRotVel()/1.05);
+                   if(Math.abs(player.getRotVel()) < .01)
+                       player.setRotVel(0);
                 }
 
-                drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
+                player.setDir(player.getDir() + player.getRotVel());
+                drawRotatedImage(gcSHIP,spaceShip,player.getDir(),player.getxPos(),player.getyPos());
 
                 rotR.setPivotX(player.getxPos()+SHIP_WIDTH/2);
                 rotR.setPivotY(player.getyPos()+SHIP_HEIGHT/2);
@@ -201,6 +204,8 @@ public class MainScreen extends Application {
                 rect.setY(player.getyPos());
 
                 rect.getTransforms().add(rotR);
+
+                System.out.println(player.getRotVel());
 
                 //physics
 
@@ -225,8 +230,6 @@ public class MainScreen extends Application {
                 //position update
                 player.setxPos(player.getxPos() + player.getxVel());
                 player.setyPos(player.getyPos() + player.getyVel());
-
-                System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
 
                 //checks below this line
 
