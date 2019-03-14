@@ -177,14 +177,21 @@ public class MainScreen extends Application {
                 gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
                 if(left_arrow){
-                    rotR.setAngle(1);
+                    rotR.setAngle(0.8);
                     rotateAmount -= 0.8;
+                }
+                else{
+                    rotR.setAngle(0);
                 }
 
                 if(right_arrow){
-                    rotR.setAngle(-1);
+                    rotR.setAngle(-0.8);
                     rotateAmount += 0.8;
                 }
+                else{
+                    rotR.setAngle(0);
+                }
+
                 drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
 
                 rotR.setPivotX(player.getxPos()+SHIP_WIDTH/2);
