@@ -7,10 +7,10 @@ public class Player {
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
 
-    private final double SPAWN_HEIGHT = 70;
+    private final double SPAWN_HEIGHT = 150;
     private final double STARTING_VELOCITY = 1.5;
     private final double ROT_ACCEL = .05;
-    private final double MAX_SPIN = 1.5;
+    private final double MAX_SPIN = 2;
 
     private double dir; //direction facing, measured in degrees (0 being right, 90 up, 180 left, 270 down)
     private double rotVel; //rotational velocity
