@@ -168,6 +168,8 @@ public class MainScreen extends Application {
             
 
             double rotateAmount = 0; // variable saves how much rotation
+            double rectRotate = 0;
+            double curRectRotate = 0;
 
             @Override
             public void handle(long l) {
@@ -176,29 +178,56 @@ public class MainScreen extends Application {
 
                 gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
+                /*
                 if(left_arrow){
-                    rotR.setAngle(0.8);
+                    rotR.setAngle(curRectRotate);
                     rotateAmount -= 0.8;
+                    rectRotate = -0.8;
+                    curRectRotate = rectRotate;
                 }
-                else{
-                    rotR.setAngle(0);
+                if(!left_arrow){
+                    rotR.setAngle(curRectRotate);
+                    rectRotate = 0;
                 }
 
                 if(right_arrow){
-                    rotR.setAngle(-0.8);
+                    rotR.setAngle(curRectRotate);
                     rotateAmount += 0.8;
+                    rectRotate = 0.8;
+                    curRectRotate = rectRotate;
                 }
-                else{
-                    rotR.setAngle(0);
+                if(!right_arrow){
+                    rotR.setAngle(curRectRotate);
+                    rectRotate = 0;
+
+                }*/
+
+                rectRotate = 0.8;
+
+                if(spacebar){
+                    curRectRotate = rectRotate;
+                    rotR.setAngle(curRectRotate);
+                }else{
+                    rectRotate = 0;
+                    rotR.setAngle(curRectRotate);
                 }
+                rectRotate = 0;
+
+                //rotR.setAngle(rotateAmount);
 
                 drawRotatedImage(gcSHIP,spaceShip,rotateAmount,player.getxPos(),player.getyPos());
 
-                rotR.setPivotX(player.getxPos()+SHIP_WIDTH/2);
-                rotR.setPivotY(player.getyPos()+SHIP_HEIGHT/2);
+                //rotR.setPivotX(player.getxPos()+SHIP_WIDTH/2);
+                //rotR.setPivotY(player.getyPos()+SHIP_HEIGHT/2);
 
-                rect.setX(player.getxPos()); //sets y-pos of rectangle
-                rect.setY(player.getyPos());
+                rotR.setPivotX(rect.getX());
+                rotR.setPivotY(rect.getY());
+
+                //rect.setX(player.getxPos()); //sets y-pos of rectangle
+                //rect.setY(player.getyPos());
+
+                rect.setX(SCREEN_WIDTH/2);
+                rect.setY(SCREEN_HEIGHT/2);
 
                 rect.getTransforms().add(rotR);
 
