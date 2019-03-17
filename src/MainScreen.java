@@ -168,6 +168,8 @@ public class MainScreen extends Application {
         new AnimationTimer(){
             
 
+            double xThrust = 0;
+            double yThrust = 0;
             double rotateAmount = 0; // variable saves how much rotation
 
             @Override
@@ -177,6 +179,14 @@ public class MainScreen extends Application {
 
                 gcPLANET.drawImage(planet,CENTER_X - planetRadius,CENTER_Y - planetRadius); //draws image onto the screen
 
+                if(spacebar){
+                    xThrust = player.getTHRUST() * Math.cos(Math.toRadians(player.getDir()));
+                    yThrust = player.getTHRUST() * Math.sin(Math.toRadians(player.getDir()));
+                }
+                else{
+                    xThrust = 0;
+                    yThrust = 0;
+                }
                 if(left_arrow){
                     rotR.setAngle(0.8);
                     if(player.getRotVel() > -player.getMaxSpin()) //limits how fast you can spin
@@ -218,8 +228,8 @@ public class MainScreen extends Application {
                 angle = Math.toDegrees(Math.atan2(respectiveY, respectiveX));
 
                 //acceleration update
-                xAccel = -totalAccel * Math.cos(Math.toRadians(angle));
-                yAccel = totalAccel * Math.sin(Math.toRadians(angle));
+                xAccel = xThrust + -totalAccel * Math.cos(Math.toRadians(angle));
+                yAccel = yThrust + totalAccel * Math.sin(Math.toRadians(angle));
 
                 //velocity update
                 player.setxVel(player.getxVel() + xAccel);

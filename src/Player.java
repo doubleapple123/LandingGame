@@ -7,6 +7,7 @@ public class Player {
     private final int CENTER_X = SCREEN_WIDTH/2;
     private final int CENTER_Y = SCREEN_HEIGHT/2;
 
+    private final double THRUST = .02;
     private final double SPAWN_HEIGHT = 150;
     private final double STARTING_VELOCITY = 1.5;
     private final double ROT_ACCEL = .05;
@@ -73,5 +74,7 @@ public class Player {
     public double getRotVel(){return rotVel;}
 
     public double getDir(){ return dir;}
+
+    public double getTHRUST(){return THRUST;}
 
 }
