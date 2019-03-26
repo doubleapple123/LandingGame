@@ -168,8 +168,6 @@ public class MainScreen extends Application {
             
 
             double rotateAmount = 0; // variable saves how much rotation
-            double rectRotate = 0;
-            double curRectRotate = 0;
 
             @Override
             public void handle(long l) {
@@ -202,16 +200,15 @@ public class MainScreen extends Application {
 
                 }*/
 
-                rectRotate = 0.8;
-
                 if(spacebar){
-                    curRectRotate = rectRotate;
-                    rotR.setAngle(curRectRotate);
-                }else{
-                    rectRotate = 0;
-                    rotR.setAngle(curRectRotate);
+                    rotR.setAngle(0.8);
+                    System.out.println(rotR.getAngle());
                 }
-                rectRotate = 0;
+
+                if(!spacebar){
+                    rotR.setAngle(0);
+                }
+
 
                 //rotR.setAngle(rotateAmount);
 
@@ -255,7 +252,7 @@ public class MainScreen extends Application {
                 player.setxPos(player.getxPos() + player.getxVel());
                 player.setyPos(player.getyPos() + player.getyVel());
 
-                System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
+                //System.out.println("X: " + player.getxPos() + "\nY: " + player.getyPos());
 
                 //checks below this line
 
